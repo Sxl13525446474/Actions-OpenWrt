@@ -1,7 +1,7 @@
 #
 # https://github.com/P3TERX/Actions-OpenWrt
 #
-# File: .github/workflows/openwrt-bulder.yml
+# File: .github/workflows/openwrt-builder.yml
 # Description: Build OpenWrt using GitHub Actions
 #
 # Copyright (c) 2019-2024 P3TERX <https://p3terx.com>
@@ -41,7 +41,6 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
       run: |
         sudo rm -f /swapfile || true
-
         sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
         sudo docker image prune --all --force
         sudo -E apt-get -qq update
@@ -79,8 +78,8 @@ jobs:
         chmod +x $DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
-        make defconfig  # 👈 挪到这里：等所有脚本和 .config 都到位后，再执行规范化
-        
+        make defconfig
+
     - name: Download package
       id: package
       run: |
@@ -133,7 +132,6 @@ jobs:
       run: |
         echo "release_tag=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
         touch release.txt
-        [ ${UPLOAD_GOFILE} = true && ${{ steps.gofile.outputs.url }} ] && echo "🔗 [GoFile](${{ steps.gofile.outputs.url }})" >> release.txt
         echo "status=success" >> $GITHUB_OUTPUT
 
     - name: Upload firmware to release
