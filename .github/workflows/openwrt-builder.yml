@@ -77,7 +77,8 @@ jobs:
         chmod +x $DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
-
+        make defconfig  # 👈 挪到这里：等所有脚本和 .config 都到位后，再执行规范化
+        
     - name: Download package
       id: package
       run: |
