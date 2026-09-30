@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash  diy-part2.sh
 #
 # https://github.com/P3TERX/Actions-OpenWrt
 # File name: diy-part2.sh
@@ -18,3 +18,11 @@
 
 # Modify hostname
 #sed -i 's/OpenWrt/P3TERX-Router/g' package/base-files/files/bin/config_generate
+
+#!/bin/bash
+# 强行删除默认的移动 MR3000D 配置文件，防止干扰
+rm -rf target/linux/qualcommax/image/cmcc_mr3000d.boot
+# 强行在全局默认配置中锁死小米 AX3000 v1
+echo "CONFIG_TARGET_qualcommax=y" >> .config
+echo "CONFIG_TARGET_qualcommax_ipq50xx=y" >> .config
+echo "CONFIG_TARGET_qualcommax_ipq50xx_DEVICE_xiaomi_ax3000=y" >> .config
